@@ -1,0 +1,131 @@
+{% extends "base.html" %}
+
+{% block title %}Upload PYQ - KCET Cutoff & PYQ Management{% endblock %}
+
+{% block content %}
+<div class="container-lg">
+    <div class="row mb-4">
+        <div class="col-12">
+            <h1 class="mb-2">
+                <i class="fas fa-book"></i> Upload Previous Year Question Papers
+            </h1>
+            <p class="text-muted">Add new PYQ papers to the system</p>
+        </div>
+    </div>
+
+    {% if success %}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="fas fa-check-circle"></i> 
+            <strong>Success!</strong> {{ success }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    {% endif %}
+
+    {% if error %}
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="fas fa-exclamation-circle"></i> 
+            <strong>Error:</strong> {{ error }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    {% endif %}
+
+    <div class="row">
+        <div class="col-lg-6 mb-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0"><i class="fas fa-upload"></i> Upload New PYQ</h5>
+                </div>
+                <div class="card-body">
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+
+                        <div class="mb-3">
+                            <label for="id_subject" class="form-label">Subject Name *</label>
+                            {{ form.subject }}
+                            {% if form.subject.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {{ form.subject.errors.0 }}
+                                </div>
+                            {% endif %}
+                            <small class="form-text text-muted">e.g., Physics, Chemistry, Mathematics, Biology, etc.</small>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="id_year" class="form-label">Academic Year *</label>
+                            {{ form.year }}
+                            {% if form.year.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {{ form.year.errors.0 }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="id_pdf_file" class="form-label">PDF File *</label>
+                            <div class="input-group">
+                                {{ form.pdf_file }}
+                                <span class="input-group-text">
+                                    <i class="fas fa-file-pdf text-danger"></i>
+                                </span>
+                            </div>
+                            {% if form.pdf_file.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {{ form.pdf_file.errors.0 }}
+                                </div>
+                            {% endif %}
+                            <small class="form-text text-muted">PDF files only</small>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-100">
+                            <i class="fas fa-upload"></i> Upload PYQ
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6 mb-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <i class="fas fa-list"></i> Available PYQs
+                        <span class="badge bg-success float-end">{{ pyqs|length }}</span>
+                    </h5>
+                </div>
+                <div class="card-body" style="max-height: 600px; overflow-y: auto;">
+                    {% if pyqs %}
+                        {% for pyq in pyqs %}
+                            <div class="d-flex justify-content-between align-items-center mb-3 pb-3 border-bottom">
+                                <div>
+                                    <h6 class="mb-1">
+                                        <i class="fas fa-file-pdf text-danger"></i> {{ pyq.subject }}
+                                    </h6>
+                                    <small class="text-muted">
+                                        <i class="fas fa-calendar"></i> {{ pyq.year.year }} | 
+                                        <i class="fas fa-clock"></i> {{ pyq.created_at|date:"d M, Y" }}
+                                    </small>
+                                </div>
+                                <div class="btn-group-vertical btn-group-sm">
+                                    <a href="{% url 'cutoff:pyq_download' pyq.id %}" class="btn btn-sm btn-outline-primary" target="_blank">
+                                        <i class="fas fa-download"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="alert alert-info text-center" role="alert">
+                            <small><i class="fas fa-info-circle"></i> No PYQs uploaded yet</small>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    #id_subject, #id_year, #id_pdf_file {
+        margin: 0;
+    }
+</style>
+{% endblock %}
