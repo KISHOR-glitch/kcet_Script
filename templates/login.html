@@ -1,18 +1,22 @@
 {% extends "base.html" %}
 
-{% block title %}Login - KCET Cutoff & PYQ Management{% endblock %}
+{% block title %}Login - KCET Hub{% endblock %}
 
 {% block content %}
-<div class="container" style="max-width: 500px; margin-top: 5rem;">
-    <div class="card">
-        <div class="card-header">
-            <h3 class="mb-0">
-                <i class="fas fa-sign-in-alt"></i> User Login
-            </h3>
-        </div>
-        <div class="card-body p-4">
+<div class="container" style="max-width: 450px; margin-top: 4rem; margin-bottom: 4rem;">
+    <div class="card fade-in">
+        <div class="card-body p-5">
+            <div style="text-align: center; margin-bottom: 2rem;">
+                <div style="font-size: 3rem; color: var(--accent-color); margin-bottom: 1rem;">
+                    <i class="fas fa-book-reader"></i>
+                </div>
+                <h2 style="margin-bottom: 0.5rem;">KCET Hub</h2>
+                <p class="text-muted">Sign in to continue</p>
+            </div>
+
             {% if form.non_field_errors %}
                 <div class="alert alert-danger" role="alert">
+                    <i class="fas fa-exclamation-circle"></i>
                     {% for error in form.non_field_errors %}
                         <div>{{ error }}</div>
                     {% endfor %}
@@ -22,38 +26,49 @@
             <form method="post" novalidate>
                 {% csrf_token %}
 
-                <div class="mb-3">
+                <div class="mb-4">
                     <label for="id_username" class="form-label">Username</label>
-                    <input type="text" class="form-control {% if form.username.errors %}is-invalid{% endif %}" 
-                           id="id_username" name="username" required placeholder="Enter your username">
+                    <input type="text" 
+                           class="form-control {% if form.username.errors %}is-invalid{% endif %}" 
+                           id="id_username" 
+                           name="username" 
+                           required 
+                           placeholder="Enter your username"
+                           style="padding: 0.85rem 1rem; font-size: 1rem;">
                     {% if form.username.errors %}
                         <div class="invalid-feedback d-block">
-                            {{ form.username.errors.0 }}
+                            <i class="fas fa-times-circle"></i> {{ form.username.errors.0 }}
                         </div>
                     {% endif %}
                 </div>
 
-                <div class="mb-4">
+                <div class="mb-5">
                     <label for="id_password" class="form-label">Password</label>
-                    <input type="password" class="form-control {% if form.password.errors %}is-invalid{% endif %}" 
-                           id="id_password" name="password" required placeholder="Enter your password">
+                    <input type="password" 
+                           class="form-control {% if form.password.errors %}is-invalid{% endif %}" 
+                           id="id_password" 
+                           name="password" 
+                           required 
+                           placeholder="Enter your password"
+                           style="padding: 0.85rem 1rem; font-size: 1rem;">
                     {% if form.password.errors %}
                         <div class="invalid-feedback d-block">
-                            {{ form.password.errors.0 }}
+                            <i class="fas fa-times-circle"></i> {{ form.password.errors.0 }}
                         </div>
                     {% endif %}
                 </div>
 
-                <button type="submit" class="btn btn-primary w-100 mb-3">
-                    <i class="fas fa-lock"></i> Login
+                <button type="submit" class="btn btn-primary w-100 mb-3" style="padding: 0.9rem; font-weight: 600;">
+                    <i class="fas fa-sign-in-alt"></i> Sign In
                 </button>
             </form>
 
-            <div class="alert alert-info text-center mb-0">
-                <small>
-                    <i class="fas fa-info-circle"></i>
-                    Contact administrator if you don't have login credentials.
-                </small>
+            <div class="card" style="background-color: #f5f5f7; border-color: var(--border-color);">
+                <div class="card-body text-center" style="padding: 1.25rem;">
+                    <small class="text-muted">
+                        <i class="fas fa-info-circle"></i> If you don't have credentials, contact the administrator
+                    </small>
+                </div>
             </div>
         </div>
     </div>

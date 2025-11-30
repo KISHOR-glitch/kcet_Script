@@ -3,40 +3,45 @@
 {% block title %}Dashboard - KCET Cutoff & PYQ Management{% endblock %}
 
 {% block content %}
-<div class="container-lg">
-    <div class="row mb-4">
-        <div class="col-12">
-            <h1 class="mb-2">
-                <i class="fas fa-tachometer-alt"></i> Dashboard
-            </h1>
-            <p class="text-muted">Welcome back, <strong>{{ user.get_full_name|default:user.username }}</strong>!</p>
-        </div>
+<div class="container-lg fade-in">
+    <!-- Hero Section -->
+    <div class="hero-section mb-5" style="margin-left: -2rem; margin-right: -2rem; margin-top: -2rem;">
+        <h1>Welcome to KCET Hub</h1>
+        <p>Your complete platform for KCET cutoffs and study materials</p>
     </div>
 
-    <!-- Statistics -->
+    <!-- Statistics Cards -->
     <div class="row mb-5">
         <div class="col-md-6 col-lg-3 mb-3">
-            <div class="stat-card">
-                <h3>{{ total_colleges }}</h3>
-                <p><i class="fas fa-building"></i> Colleges</p>
+            <div class="card stat-card h-100">
+                <div class="card-body text-center">
+                    <h2 style="color: var(--accent-color); margin-bottom: 0.5rem;">{{ total_colleges }}</h2>
+                    <p class="text-muted mb-0"><i class="fas fa-building"></i> Colleges</p>
+                </div>
             </div>
         </div>
         <div class="col-md-6 col-lg-3 mb-3">
-            <div class="stat-card">
-                <h3>{{ total_branches }}</h3>
-                <p><i class="fas fa-book"></i> Branches</p>
+            <div class="card stat-card h-100">
+                <div class="card-body text-center">
+                    <h2 style="color: var(--success-color); margin-bottom: 0.5rem;">{{ total_branches }}</h2>
+                    <p class="text-muted mb-0"><i class="fas fa-book"></i> Branches</p>
+                </div>
             </div>
         </div>
         <div class="col-md-6 col-lg-3 mb-3">
-            <div class="stat-card">
-                <h3>{{ total_categories }}</h3>
-                <p><i class="fas fa-tags"></i> Categories</p>
+            <div class="card stat-card h-100">
+                <div class="card-body text-center">
+                    <h2 style="color: #ff9500; margin-bottom: 0.5rem;">{{ total_categories }}</h2>
+                    <p class="text-muted mb-0"><i class="fas fa-tags"></i> Categories</p>
+                </div>
             </div>
         </div>
         <div class="col-md-6 col-lg-3 mb-3">
-            <div class="stat-card">
-                <h3>{{ total_cutoffs }}</h3>
-                <p><i class="fas fa-chart-bar"></i> Cutoffs</p>
+            <div class="card stat-card h-100">
+                <div class="card-body text-center">
+                    <h2 style="color: #ff3b30; margin-bottom: 0.5rem;">{{ total_cutoffs }}</h2>
+                    <p class="text-muted mb-0"><i class="fas fa-chart-bar"></i> Cutoffs</p>
+                </div>
             </div>
         </div>
     </div>
@@ -45,28 +50,34 @@
     <div class="row">
         <div class="col-lg-6 mb-4">
             <div class="card h-100">
-                <div class="card-header">
-                    <h5 class="mb-0"><i class="fas fa-search"></i> Search Cutoffs</h5>
-                </div>
-                <div class="card-body text-center py-5">
-                    <p class="text-muted mb-4">Find cutoff ranks by searching with filters</p>
-                    <a href="{% url 'cutoff:cutoff_search' %}" class="btn btn-primary btn-lg">
-                        <i class="fas fa-search"></i> Go to Search
-                    </a>
+                <div class="card-body p-4">
+                    <div style="text-align: center;">
+                        <div style="font-size: 3rem; color: var(--accent-color); margin-bottom: 1rem;">
+                            <i class="fas fa-search"></i>
+                        </div>
+                        <h4 style="margin-bottom: 1rem;">Search Cutoffs</h4>
+                        <p class="text-muted mb-3">Find cutoff ranks by searching with filters like college, branch, and year</p>
+                        <a href="{% url 'cutoff:cutoff_search' %}" class="btn btn-primary">
+                            <i class="fas fa-arrow-right"></i> Start Searching
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
 
         <div class="col-lg-6 mb-4">
             <div class="card h-100">
-                <div class="card-header">
-                    <h5 class="mb-0"><i class="fas fa-file-pdf"></i> Download PYQs</h5>
-                </div>
-                <div class="card-body text-center py-5">
-                    <p class="text-muted mb-4">Access previous year question papers</p>
-                    <a href="{% url 'cutoff:pyq_list' %}" class="btn btn-success btn-lg">
-                        <i class="fas fa-file-pdf"></i> View PYQs ({{ total_pyqs }})
-                    </a>
+                <div class="card-body p-4">
+                    <div style="text-align: center;">
+                        <div style="font-size: 3rem; color: var(--success-color); margin-bottom: 1rem;">
+                            <i class="fas fa-file-pdf"></i>
+                        </div>
+                        <h4 style="margin-bottom: 1rem;">Download PYQs</h4>
+                        <p class="text-muted mb-3">Access {{ total_pyqs }} previous year question papers for your preparation</p>
+                        <a href="{% url 'cutoff:pyq_list' %}" class="btn btn-success">
+                            <i class="fas fa-arrow-right"></i> View Papers
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -74,10 +85,38 @@
         {% if user.is_staff %}
             <div class="col-lg-6 mb-4">
                 <div class="card h-100">
-                    <div class="card-header">
-                        <h5 class="mb-0"><i class="fas fa-upload"></i> Upload Cutoff PDF</h5>
+                    <div class="card-body p-4">
+                        <div style="text-align: center;">
+                            <div style="font-size: 3rem; color: #ff9500; margin-bottom: 1rem;">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                            </div>
+                            <h4 style="margin-bottom: 1rem;">Upload PDF</h4>
+                            <p class="text-muted mb-3">Upload new cutoff PDFs to parse and populate the database</p>
+                            <a href="{% url 'cutoff:upload_pdf' %}" class="btn btn-warning">
+                                <i class="fas fa-arrow-right"></i> Upload Data
+                            </a>
+                        </div>
                     </div>
-                    <div class="card-body text-center py-5">
+                </div>
+            </div>
+
+            <div class="col-lg-6 mb-4">
+                <div class="card h-100">
+                    <div class="card-body p-4">
+                        <div style="text-align: center;">
+                            <div style="font-size: 3rem; color: #ff3b30; margin-bottom: 1rem;">
+                                <i class="fas fa-plus-circle"></i>
+                            </div>
+                            <h4 style="margin-bottom: 1rem;">Upload PYQs</h4>
+                            <p class="text-muted mb-3">Add new previous year question papers for students</p>
+                            <a href="{% url 'cutoff:upload_pyq' %}" class="btn btn-danger">
+                                <i class="fas fa-arrow-right"></i> Add Papers
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
                         <p class="text-muted mb-4">Upload and process cutoff PDF files</p>
                         <a href="{% url 'cutoff:upload_pdf' %}" class="btn btn-warning btn-lg">
                             <i class="fas fa-upload"></i> Upload PDF
