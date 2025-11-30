@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.http import JsonResponse, FileResponse
 from django.views.decorators.http import require_http_methods
 from django.db.models import Q
@@ -47,6 +47,23 @@ def logout_view(request):
     """Handle user logout"""
     logout(request)
     return redirect('cutoff:login')
+
+
+def register_view(request):
+    """Handle user registration"""
+    if request.user.is_authenticated:
+        return redirect('cutoff:dashboard')
+
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('cutoff:dashboard')
+    else:
+        form = UserCreationForm()
+
+    return render(request, 'register.html', {'form': form})
 
 
 # ============= Helper Functions =============

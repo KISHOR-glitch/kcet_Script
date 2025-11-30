@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+
+{% block title %}Register - KCET Hub{% endblock %}
+
+{% block content %}
+<div class="container" style="max-width: 450px; margin-top: 3rem; margin-bottom: 4rem;">
+    <div class="card fade-in">
+        <div class="card-body p-5">
+            <div style="text-align: center; margin-bottom: 2rem;">
+                <div style="font-size: 3rem; color: var(--accent-color); margin-bottom: 1rem;">
+                    <i class="fas fa-user-plus"></i>
+                </div>
+                <h2 style="margin-bottom: 0.5rem;">Create Account</h2>
+                <p class="text-muted">Join KCET Hub to access cutoffs & PYQs</p>
+            </div>
+
+            {% if form.non_field_errors %}
+                <div class="alert alert-danger" role="alert">
+                    <i class="fas fa-exclamation-circle"></i>
+                    {% for error in form.non_field_errors %}
+                        <div>{{ error }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <form method="post" novalidate>
+                {% csrf_token %}
+
+                <div class="mb-4">
+                    <label for="id_username" class="form-label">Username</label>
+                    <input type="text" 
+                           class="form-control {% if form.username.errors %}is-invalid{% endif %}" 
+                           id="id_username" 
+                           name="username" 
+                           required 
+                           placeholder="Choose a unique username"
+                           style="padding: 0.85rem 1rem; font-size: 1rem;">
+                    {% if form.username.errors %}
+                        <div class="invalid-feedback d-block">
+                            <i class="fas fa-times-circle"></i> {{ form.username.errors.0 }}
+                        </div>
+                    {% endif %}
+                    <small class="form-text text-muted d-block mt-2">
+                        <i class="fas fa-info-circle"></i> 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+                    </small>
+                </div>
+
+                <div class="mb-4">
+                    <label for="id_password1" class="form-label">Password</label>
+                    <input type="password" 
+                           class="form-control {% if form.password1.errors %}is-invalid{% endif %}" 
+                           id="id_password1" 
+                           name="password1" 
+                           required 
+                           placeholder="Create a strong password"
+                           style="padding: 0.85rem 1rem; font-size: 1rem;">
+                    {% if form.password1.errors %}
+                        <div class="invalid-feedback d-block">
+                            <i class="fas fa-times-circle"></i> {{ form.password1.errors.0 }}
+                        </div>
+                    {% endif %}
+                    <small class="form-text text-muted d-block mt-2">
+                        <i class="fas fa-shield-alt"></i> At least 8 characters with letters and numbers
+                    </small>
+                </div>
+
+                <div class="mb-5">
+                    <label for="id_password2" class="form-label">Confirm Password</label>
+                    <input type="password" 
+                           class="form-control {% if form.password2.errors %}is-invalid{% endif %}" 
+                           id="id_password2" 
+                           name="password2" 
+                           required 
+                           placeholder="Re-enter your password"
+                           style="padding: 0.85rem 1rem; font-size: 1rem;">
+                    {% if form.password2.errors %}
+                        <div class="invalid-feedback d-block">
+                            <i class="fas fa-times-circle"></i> {{ form.password2.errors.0 }}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100 mb-4" style="padding: 0.9rem; font-weight: 600;">
+                    <i class="fas fa-check-circle"></i> Create Account
+                </button>
+
+                <div style="text-align: center; padding-top: 1rem; border-top: 1px solid var(--border-color);">
+                    <p class="mb-0" style="color: var(--secondary-color); font-weight: 500;">
+                        Already have an account? 
+                        <a href="{% url 'cutoff:login' %}" style="color: var(--accent-color); text-decoration: none; font-weight: 600;">
+                            Sign In
+                        </a>
+                    </p>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="card mt-4" style="background-color: #f5f5f7; border-color: var(--border-color); border-left: 4px solid var(--accent-color);">
+        <div class="card-body text-center" style="padding: 1.25rem;">
+            <small class="text-muted">
+                <i class="fas fa-lock"></i> Your data is secure and encrypted
+            </small>
+        </div>
+    </div>
+</div>
+{% endblock %}
